@@ -7,16 +7,18 @@ import Detail from './pages/detail/detail'
 class App extends React.Component {
     render() {
         return(
+            <React.Fragment>
             <Switch>
                 <Route
-                    parh="/shows/:movieId"
+                    path="/shows/:movieId"
                     component={ Detail }
                 ></Route>
                 <Route
-                    parh="/"
+                    path="/"
                     component={ Home }
                 ></Route>
             </Switch>
+            </React.Fragment>
         )
     }
 }
