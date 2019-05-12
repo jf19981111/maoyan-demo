@@ -16,6 +16,19 @@
 
 - yarn add antd-mobile
 - yarn add babel-plugin-import
+- 修改 config-overrides.js 文件
+- 重启项目
+
+## 使用作用域样式
+
+- styled-components
+> 能够帮我们创建样式组件
+- yarn add styled-components
+- 将 style.less 修改为 style.js
+- 编写样式组件
+- index.js 中引入 style.js 中写的样式
+
+
 
 ## 项目需要的模块
 
