@@ -1,19 +1,22 @@
+// 一级路由页面
 import React from 'react'
-
-// 引入 antd-mobile 的组件
-import { Button } from 'antd-mobile'
-
-// 进入自己的组件
-import Header from './common/header/header'
+import { Route,Switch } from 'react-router-dom'
+import Home from './pages/home/home'
+import Detail from './pages/detail/detail'
 
 class App extends React.Component {
     render() {
         return(
-            <div className="box">
-                我的天
-                <Button>点击</Button>
-                <Header></Header>
-            </div>
+            <Switch>
+                <Route
+                    parh="/shows/:movieId"
+                    component={ Detail }
+                ></Route>
+                <Route
+                    parh="/"
+                    component={ Home }
+                ></Route>
+            </Switch>
         )
     }
 }
