@@ -8,6 +8,7 @@ export const TabsWrapper = styled.ul`
     width: 100%;
     border-top: 1px solid #d8d8d8;
     display: flex;
+    background: #fff;
 `
 
 export const TabItem = styled.li`

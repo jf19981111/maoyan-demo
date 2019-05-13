@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 import searchIcon from '@/assets/images/search_icon.png'
 
+export const MovieWrapper = styled.div`
+  padding-top: 50px;
+`
+
 export const TopbarWrapper = styled.section`
   border-bottom: 1px solid #e6e6e6;
   height: 44px;

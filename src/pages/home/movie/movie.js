@@ -1,13 +1,22 @@
 import React from 'react'
+import http from '@/utils/http'
 
 import Header from '@/common/header/header'
 
-import { TopbarWrapper, ListWrapper } from './style'
+import { MovieWrapper, TopbarWrapper, ListWrapper } from './style'
 
 class Movie extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            movieList: []
+        }
+    }
     render() {
+        const { movieList } = this.state
         return(
-            <div>
+            <MovieWrapper>
                 {/* 头部 */}
                 <Header />
                 {/* topbar */}
@@ -29,36 +38,68 @@ class Movie extends React.Component {
                 {/* list-wrap */}
 
                 <ListWrapper>
-                <div className="main-block">
-                    <div className="avatar">
-                        <div className="default-img-bg">
-                            <img src="https://p0.meituan.net/128.180/movie/f29c0f9ff0340d00085f4bc1a395ecf02603950.jpg" alit="" />		
-                        </div>
-                    </div> 
-                    <div className="mb-outline-b content-wrapper">
-                        <div className="column content">
-                            <div className="box-flex movie-title">
-                            <div className="title line-ellipsis v3dimax_title">大侦探皮卡丘</div>
-                                <span className="version v3d imax"></span>
-                            </div>
-                            <div className="detail column">
-                                <div className="score line-ellipsis"> 
-                                    <span className="score-suffix">观众评 </span>
-                                    <span className="grade">8.6</span>
+                    {
+                        movieList.map(item => {
+                            return (
+                                <div className="main-block" key={item.id}>
+                                    <div className="avatar">
+                                        <div className="default-img-bg">
+                                            <img src={item.img.replace('w.h', '128.180')} alit="" />		
+                                        </div>
+                                    </div> 
+                                    <div className="mb-outline-b content-wrapper">
+                                        <div className="column content">
+                                            <div className="box-flex movie-title">
+                                            <div className="title line-ellipsis v3dimax_title">{ item.nm }</div>
+                                                <span className="version v3d imax"></span>
+                                            </div>
+                                            <div className="detail column">
+                                                <div className="score line-ellipsis"> 
+                                                    <span className="score-suffix">观众评分</span>
+                                                    <span className="grade">{ item.sc }</span>
+                                                </div>
+                                                <div className="actor line-ellipsis">主演: {item.star}</div>
+                                                <div className="show-info line-ellipsis">{ item.showInfo }</div>
+                                            </div>
+                                        </div>
+                                        <div className="button-block">
+                                            {
+                                                item.showst === 3 ? (
+                                                    <div className="btn normal">
+                                                        <span className="fix" data-bid="dp_wx_home_movie_btn">
+                                                            购票
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="btn normal">
+                                                        <span className="fix" data-bid="dp_wx_home_movie_btn">
+                                                            预售
+                                                        </span>
+                                                    </div>
+                                                )
+                                            }
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="actor line-ellipsis">主演: 瑞安·雷诺兹,贾斯蒂斯·史密斯,凯瑟琳·纽顿</div>
-                                <div className="show-info line-ellipsis">今天265家影院放映3336场</div>
-                            </div>
-                        </div>
-                        <div className="button-block">
-                            <div className="btn normal"><span className="fix" data-bid="dp_wx_home_movie_btn">购票</span></div>
-                        </div>
-                    </div>
-                </div>
+                            )
+                        })
+                    }
                 </ListWrapper>
-
-            </div>
+            </MovieWrapper>
         )
+    }
+
+    /**
+     * 请求数据
+     */
+    componentDidMount() {
+        http.get('/ajax/movieOnInfoList?token=').then(res => {
+            // console.log(res)
+            this.setState(() => ({
+                movieList: res.movieList
+            }))
+        })
     }
 }
 

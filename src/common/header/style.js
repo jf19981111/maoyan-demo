@@ -6,6 +6,15 @@ export const HeaderWrapper = styled.header`
     background: #e54847;
     display: flex;
     line-height: 50px;
+    &.isFixed {
+        position: fixed;
+        width: 100%;
+        top: 0;
+
+        // & + section {
+        //     margin-top: 50px;
+        // }
+    }
 `
 
 export const Title = styled.h1`
