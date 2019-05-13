@@ -36,3 +36,48 @@
 - react-router-dom
 - redux
 - antd （找一个UI组件库）
+
+
+# redux
+
+> 他是一款 JavaScript 的状态管理器
+
+## Redux 的三大原则
+
+- 单一数据源：整个应用的 state 被储存在一棵 object tree 中，并且这个 object tree 只存在于唯一一个 store 中
+
+- state 是只读的：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象
+
+- 使用纯函数来执行修改：为了描述 action 如何改变 state tree ，你需要编写 reducers。
+
+
+## 使用步骤
+1. 安装 yarn add redux
+
+2. 需要有一个文件来创建仓库的实例对象 (比如 src/store/index.js)
+```js
+//引入 redux，在它的身上有一个 createStore 这个方法，然后使用 这个 createStore() 这个方法
+import { createStore } from 'redux';
+import reducer from './reducer'
+/**
+ * 创建 store 实例
+ * @param {Funtion} reducer 接收reducer函数
+ * @return {Object} store 仓库的 store 实例
+ * 
+ * 将 reducer 拆分出去
+*/
+const store = createStore(reducer)
+export default store;
+```
+3. 由于 2 中的步骤，所以我们创建一个 reducer.js 的文件，然后暴露出去，接收两个参数
+```js
+/**
+ * @param {Any} state 上一次仓库的数据
+ * @param {Object} action 这次的动作
+ * @return {Any} newState 一定要返回一个新的 state
+*/
+export default (state, action) => {
+    return state
+}
+```
+3. React 中哪里需要使用仓库的实例对象，哪里就引入即可 (上面就是 redux 的基本结构)
