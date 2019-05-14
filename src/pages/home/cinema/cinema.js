@@ -4,11 +4,8 @@ import { InputItem, Button,Flex, List, WhiteSpace } from 'antd-mobile'
 
 import store from '@/store'
 
-import { 
-    INPUT_VALUE,
-    ADD_TODO,
-    DEL_TODO,
-} from './store/actionTypes'
+import { getInputChgAction, getAddTodoAction, getDelTodoAction } from './store/createActions'
+
 
 class Cinema extends React.Component {
     constructor(props) {
@@ -70,8 +67,6 @@ class Cinema extends React.Component {
                     }
                     
                 </List>
-
-
             </TodoWrapper>
         )
     }
@@ -81,20 +76,14 @@ class Cinema extends React.Component {
      * @param {String} value 输入的值
      */
     chgInput(value) {
-        store.dispatch({
-            type: INPUT_VALUE,
-            value,
-        })
+        store.dispatch(getInputChgAction(value))
     }
 
     /**
      * addTodo 添加操作
      */
     addTodo() {
-        store.dispatch({
-            type: ADD_TODO,
-            text: this.state.inputVal
-        })
+        store.dispatch(getAddTodoAction())
     }
 
     /**
@@ -102,10 +91,7 @@ class Cinema extends React.Component {
      * @param {Number} index 下标
      */
     delTodo(index) {
-        store.dispatch({
-            type: DEL_TODO,
-            index,
-        })
+        store.dispatch(getDelTodoAction(index))
     }
 
     /**

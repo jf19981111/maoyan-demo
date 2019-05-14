@@ -80,6 +80,7 @@ export default (state, action) => {
 }
 ```
 3. React 中哪里需要使用仓库的实例对象，哪里就引入即可 (上面就是 redux 的基本结构)
+4. 一般 reducer 中使用 switch 来匹配 action 动作
 
 
 ### 使用 redux 的小点
@@ -120,3 +121,69 @@ componentWillUnmount() {
 1. 从主 reducer 拆分出去小的，每个小功能点都创建一个 store/reducer 然后在 主reducer 中引入即可，
 2. 随时注意 state 为 undefined 的情况，一般都需要来一个 默认赋值
 3. 还要注意拆分出去之后，主 reducer 的层级变了，然后从仓库中获取数据的时候需要注意层级结构来 . 调用
+
+- 传统方法
+
+```js
+// 主 reducer
+import todoReducer from '@/pages/home/cinema/store/reducer'
+import movieReducer from '@/pages/home/movie/store/reducer'
+
+// 因为 state 已经很庞大了，所以我们传递进去的时候，就把相应的 reducer 对象传递进去，随时要注意 undefined 的情况
+export default (state = {} , action) => {
+   return {
+       todo: todoReducer(state.todo, action),
+       movie: movieReducer(state.movie, action)
+   }
+}
+```
+
+- 使用 combineReducers 来结合拆分 （针对主 reducer）
+
+```js
+// 主 reducer
+import { combineReducers } from 'redux'
+
+import todoReducer from '@/pages/home/cinema/store/reducer'
+import movieReducer from '@/pages/home/movie/store/reducer'
+
+export default combineReducers({
+    todo: todoReducer,
+    movie: movieReducer 
+})
+```
+
+### redux 中的 createActions
+
+> 一个函数，由它来创建动作对象，返回一个对象
+
+1. 当创建动作之后，我们派发动作 则是要，使用我们创建动作的那个方法，执行（调用）一下
+
+```js
+// 创建动作的文件 createAction.js
+
+import {
+    INPUT_VALUE,
+} from './actionTypes'
+
+/***
+ * 获取 input 框输入的动作
+ * @return {Object} inputChange 的动作对象
+ */
+export const getInputChgAction = () => {
+    return {
+        type: INPUT_VALUE,
+    }
+}
+
+// xxx.js
+// 1. 引入创建动作的文件
+import { getInputChgAction } from './store/createActions'
+/**
+ * chgInput 输入框事件，改变仓库的inputVal
+ * @param {String} value 输入的值
+ */
+chgInput(value) {
+    store.dispatch(getInputChgAction(value))
+}
+```

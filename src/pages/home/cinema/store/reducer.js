@@ -22,7 +22,7 @@ export default (state = defaultState, action) => {
             newState.inputVal = action.value
             break;
         case ADD_TODO:
-           newState.todoList = [...state.todoList, { id: state.todoList.length + 1, name: action.text }]
+           newState.todoList = [...state.todoList, { id: state.todoList.length + 1, name: newState.inputVal }]
            newState.inputVal = ''
             break;
         case DEL_TODO:
