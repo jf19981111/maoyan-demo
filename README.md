@@ -29,7 +29,6 @@
 - index.js 中引入 style.js 中写的样式
 
 
-
 ## 项目需要的模块
 
 - axios
@@ -81,3 +80,34 @@ export default (state, action) => {
 }
 ```
 3. React 中哪里需要使用仓库的实例对象，哪里就引入即可 (上面就是 redux 的基本结构)
+
+
+### 使用 redux 的小点
+1. 当我们使用上 store 的时候，我们仓库会默认执行一遍 reducer
+2. 当我们使用 开发工具的时候，需要 
+    - 1.安装 yarn add redux-devtools
+
+    - 2.然后在我们创建仓库的地方，配上 `window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()`
+3. store 仓库的实例对象
+    - 1. getState() 获取仓库的数据
+    - 2. subscribe(cb) 监听仓库的数据变化，当仓库有变化的时候，cb就会执行，它会返回一个函数，可以用来取消监听
+    - 3. dispatch(obj) 派发动作  obj---动作
+    想要 修改仓库中的数据，就要派发一个动作 dispatch（PS：一个动作中必须要有 `type` 属性），然后派发该动作之后就进入 reducer中， 然后reducer根据动作的不同来处理不同的操作 
+4. 当我们使用 subscribe 进行监听仓库的变化的时候，由于 第一点 中的，我们知道，如果在别的地方没有取消监听，那么别的地方派发动作，就会影响，导致报错，意思就是两个派发动作同时执行，同时要求仓库发生变化,即，在一个组件即将要销毁的时候，取消监听
+```js
+/**
+ * 需要手动监听仓库的变化
+ * @return {Function} 调用这个返回值，可以在componentWillUnmount销毁这个监听
+*/
+this.unSub = store.subscribe(() => {
+    this.setState(() => ({
+        ...
+    }))
+})
+
+componentWillUnmount() {
+    this.unSub()
+}
+```
+
+### actionTypes 常量

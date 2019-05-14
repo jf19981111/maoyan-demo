@@ -2,6 +2,9 @@ import React from 'react'
 import http from '@/utils/http'
 
 import Header from '@/common/header/header'
+import store from '@/store'
+
+import { SET_MOVIE_LIST } from '@/store/actionTypes'
 
 import { MovieWrapper, TopbarWrapper, ListWrapper } from './style'
 
@@ -10,8 +13,14 @@ class Movie extends React.Component {
         super(props)
 
         this.state = {
-            movieList: []
+            movieList: store.getState().movieList
         }
+
+        this.unSub = store.subscribe(() => {
+            this.setState(() => ({
+                movieList: store.getState().movieList
+            }))
+        })
     }
     render() {
         const { movieList } = this.state
@@ -44,7 +53,7 @@ class Movie extends React.Component {
                                 <div className="main-block" key={item.id}>
                                     <div className="avatar">
                                         <div className="default-img-bg">
-                                            <img src={item.img.replace('w.h', '128.180')} alit="" />		
+                                            <img src={item.img.replace('w.h', '128.180')} alt="" />		
                                         </div>
                                     </div> 
                                     <div className="mb-outline-b content-wrapper">
@@ -95,11 +104,18 @@ class Movie extends React.Component {
      */
     componentDidMount() {
         http.get('/ajax/movieOnInfoList?token=').then(res => {
-            // console.log(res)
-            this.setState(() => ({
-                movieList: res.movieList
-            }))
+            store.dispatch({
+                type: SET_MOVIE_LIST,
+                list: res.movieList
+            })
         })
+    }
+
+    /**
+     * componentWillUnmount 组件销毁监听
+     */
+    componentWillUnmount() {
+        this.unSub()
     }
 }
 
