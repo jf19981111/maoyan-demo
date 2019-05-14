@@ -8,15 +8,15 @@ import {
     INPUT_VALUE,
     ADD_TODO,
     DEL_TODO,
-} from '@/store/actionTypes'
+} from './store/actionTypes'
 
 class Cinema extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            inputVal: store.getState().inputVal,
-            todoList: store.getState().todoList,
+            inputVal: store.getState().todo.inputVal,
+            todoList: store.getState().todo.todoList,
         }
 
         /**
@@ -26,8 +26,8 @@ class Cinema extends React.Component {
         this.unSub = store.subscribe(() => {
             console.log('todoList', this)
             this.setState(() => ({
-                inputVal: store.getState().inputVal,
-                todoList: store.getState().todoList,
+                inputVal: store.getState().todo.inputVal,
+                todoList: store.getState().todo.todoList,
             }))
         })
 

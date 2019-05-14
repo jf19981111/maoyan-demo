@@ -111,3 +111,12 @@ componentWillUnmount() {
 ```
 
 ### actionTypes 常量
+
+> 存放动作类型的常量，然后暴露出去，全局唯一性
+
+
+### redux 中的 reducer 拆分
+
+1. 从主 reducer 拆分出去小的，每个小功能点都创建一个 store/reducer 然后在 主reducer 中引入即可，
+2. 随时注意 state 为 undefined 的情况，一般都需要来一个 默认赋值
+3. 还要注意拆分出去之后，主 reducer 的层级变了，然后从仓库中获取数据的时候需要注意层级结构来 . 调用

@@ -4,7 +4,7 @@ import http from '@/utils/http'
 import Header from '@/common/header/header'
 import store from '@/store'
 
-import { SET_MOVIE_LIST } from '@/store/actionTypes'
+import { SET_MOVIE_LIST } from './store/actionTypes'
 
 import { MovieWrapper, TopbarWrapper, ListWrapper } from './style'
 
@@ -13,12 +13,12 @@ class Movie extends React.Component {
         super(props)
 
         this.state = {
-            movieList: store.getState().movieList
+            movieList: store.getState().movie.movieList
         }
 
         this.unSub = store.subscribe(() => {
             this.setState(() => ({
-                movieList: store.getState().movieList
+                movieList: store.getState().movie.movieList
             }))
         })
     }
