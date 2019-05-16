@@ -4,6 +4,7 @@ import {
     INPUT_VALUE,
     ADD_TODO,
     DEL_TODO,
+    INIT_TODO,
 } from './actionTypes'
 
 /***
@@ -39,5 +40,19 @@ export const getDelTodoAction = (index) => {
     return {
         type: DEL_TODO,
         index
+    }
+}
+
+
+/**
+ * 获取 初始化 todo数据
+ * @param {Object} list todo默认的数据集合
+ * @return {Object} 动作对象
+ */
+export const getInitTodoAction = (list) => {
+    // console.log(res)
+    return {
+        type: INIT_TODO,
+        list
     }
 }
