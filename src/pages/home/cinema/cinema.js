@@ -1,10 +1,8 @@
 import React from 'react'
 import { TodoWrapper } from './style'
-import { InputItem, Button,Flex, List, WhiteSpace, Toast } from 'antd-mobile'
+import { InputItem, Button,Flex, List, WhiteSpace } from 'antd-mobile'
 
 import store from '@/store'
-
-import http from '@/utils/http'
 
 import { getInputChgAction, getAddTodoAction, getDelTodoAction, getInitTodoAction } from './store/createActions'
 
@@ -100,15 +98,7 @@ class Cinema extends React.Component {
      * 页面一加载的时候请求 todo 数据
      */
     componentDidMount() {
-        Toast.loading('疯狂加载中...', 0)
-        setTimeout(() => {
-            http.get('/json/todo.json')
-            .then(res => {
-                store.dispatch(getInitTodoAction(res.todo))
-                Toast.hide()
-            })
-        }, 1000)
-        
+        store.dispatch(getInitTodoAction) 
     }
 
     /**

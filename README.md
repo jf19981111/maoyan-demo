@@ -156,6 +156,7 @@ export default combineReducers({
 ### redux 中的 createActions
 
 > 一个函数，由它来创建动作对象，返回一个对象
+createActions 里面的函数，要么是异步动作函数，要么是返回一个异步动作函数，要么是一个普通函数，返回一个动作对象
 
 1. 当创建动作之后，我们派发动作 则是要，使用我们创建动作的那个方法，执行（调用）一下
 
@@ -198,7 +199,8 @@ chgInput(value) {
 
 1. 安装 `yarn add redux-logger`
 2. 在创建 store 的位置引入并使用它
-    - 在 redux 上引入 `applyMiddleware`
+    - 在 redux 上引入 `applyMiddleware` (这是使用了中间件之后要引入的) 
+    它是 Redux 的原生方法，作用是将所有中间件组成一个数组，依次执行
     - 引入安装的 logger
     - 在创建store 的里面使用 `applyMiddleware(logger)`
 
@@ -226,4 +228,28 @@ export default store;
 
 - redux-thunk
 
-> 使用这个中间件之后，能让我们的 store.dispatch 这个方法不光能接受对象，也能接受函数
+> 使用这个中间件之后，能让我们的 store.dispatch 这个方法不光能接受对象，也能接受一个异步动作函数
+
+1. 安装 `yarn add redux-thunk`
+2. 在创建 store 的位置引入并使用它
+
+PS: 日志信息中间件放置在最后
+
+3. 使用 thunk，就需要把 creatAction 中创建的动作改成，返回一个函数，做异步的代码 (使用了闭包)
+    --- 需要传参就使用闭包的形式
+    --- 不需要传参就直接返回函数，不调用
+```js
+export const getDelTodoAction = (index) => {
+    // return 出去的是异步动作函数
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch({
+                type: DEL_TODO,
+                index
+            })
+        }, 1000)
+    }
+}
+```
+
+#### 函数式编程
