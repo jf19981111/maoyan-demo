@@ -190,3 +190,40 @@ chgInput(value) {
 
 # ? React Element 是什么
 > 
+
+
+### redux 中的中间件
+
+- redux-logger
+
+1. 安装 `yarn add redux-logger`
+2. 在创建 store 的位置引入并使用它
+    - 在 redux 上引入 `applyMiddleware`
+    - 引入安装的 logger
+    - 在创建store 的里面使用 `applyMiddleware(logger)`
+
+PS:当使用了中间件之后，之前为了支持redux工具的那段代码不能用了，需要重新修改,根据官方文档来操作
+
+```js
+// 这个就是我们创建仓库的 js 文件
+
+import { createStore, applyMiddleware, compose } from 'redux'
+import logger from 'redux-logger'
+import reducer from './reducer'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+    reducer,
+    composeEnhancers(
+        applyMiddleware(logger)
+    )
+    
+)
+export default store;
+
+```
+
+- redux-thunk
+
+> 使用这个中间件之后，能让我们的 store.dispatch 这个方法不光能接受对象，也能接受函数
