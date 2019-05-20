@@ -1,8 +1,8 @@
 import React from 'react'
-import { TodoWrapper } from './style'
-import { InputItem, Button,Flex, List, WhiteSpace } from 'antd-mobile'
+
 
 import store from '@/store'
+import Ui from './ui'
 
 import { getInputChgAction, getAddTodoAction, getDelTodoAction, getInitTodoAction } from './store/createActions'
 
@@ -33,41 +33,14 @@ class Cinema extends React.Component {
         this.delTodo = this.delTodo.bind(this)
     }
     render() {
-        const { inputVal, todoList } = this.state
         return(
-            <TodoWrapper>
-                <h1>TodoList</h1>
-                <Flex>
-                    <Flex.Item>
-                        <InputItem 
-                            value={inputVal}
-                            onChange={this.chgInput}
-                        />
-                    </Flex.Item>
-                    <Flex.Item>
-                        <Button 
-                            type="primary"
-                            onClick={this.addTodo}
-                        > ADD</Button>
-                    </Flex.Item>
-                </Flex>
-
-                <WhiteSpace></WhiteSpace>
-
-                <List>
-                    {
-                        todoList.map((item, index) => {
-                            return (
-                                <List.Item 
-                                    key={item.name}
-                                    onClick={this.delTodo.bind(null, index)}
-                            >{ item.name }</List.Item>
-                            )
-                        })
-                    }
-                    
-                </List>
-            </TodoWrapper>
+            <Ui 
+                inputVal={this.state.inputVal}
+                todoList={this.state.todoList}
+                chgInput={this.chgInput}
+                addTodo={this.addTodo}
+                delTodo={this.delTodo}
+            />
         )
     }
 
