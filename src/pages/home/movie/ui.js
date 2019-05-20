@@ -79,6 +79,10 @@ class UI extends React.Component {
             </MovieWrapper>
         )
     }
+
+    componentDidMount() {
+        this.props.getMovieList()
+    }
 }
 
 export default UI;

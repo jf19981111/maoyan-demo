@@ -43,6 +43,13 @@ class UI extends React.Component {
             </TodoWrapper>
         )
     }
+
+    /**
+     * 初始化数据
+     */
+    componentDidMount() {
+        this.props.initTodo()
+    }
 }
 
 export default UI;

@@ -265,3 +265,18 @@ export const getDelTodoAction = (index) => {
 
 - UI组件，只需要负责UI的渲染，它身上的数据都要从容器组件给他传递过来
 - 容器组件，只负责数据的处理与传递，它身上不用处理UI的渲染
+
+#### 我们需要的是，自己写ui组件，然后由react-redux给我们生成容器组件
+
+## 使用步骤
+1. 安装 `yarn add react-redux`
+2. 使用 Prodiver 组件，将 store主动传递给项目的所有组件
+3. 使用它的 connect 方法，根据某个ui组件自动生成容器组件
+        `connect(mapStateToProps, mapDispatchToProps)(ui组件)`
+    - mapStateToProps
+
+        1. 能够将redux中的state数据映射到ui组件props中去
+        
+    - mapDispatchToProps
+
+        1. 能够将redux中的某个动作映射到ui组件的props中去

@@ -1,85 +1,47 @@
-import React from 'react'
-
-
-import store from '@/store'
+// 容器组件，由react-redux自动生成
+import { connect } from 'react-redux'
 import Ui from './ui'
+import { 
+    getInputChgAction, 
+    getAddTodoAction, 
+    getDelTodoAction, 
+    getInitTodoAction 
+} from './store/createActions'
 
-import { getInputChgAction, getAddTodoAction, getDelTodoAction, getInitTodoAction } from './store/createActions'
-
-
-class Cinema extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            inputVal: store.getState().todo.inputVal,
-            todoList: store.getState().todo.todoList,
-        }
-
-        /**
-         * 需要手动监听仓库的变化
-         * @return {Function} 调用这个返回值可以销毁这个监听
-         */
-        this.unSub = store.subscribe(() => {
-            console.log('todoList', this)
-            this.setState(() => ({
-                inputVal: store.getState().todo.inputVal,
-                todoList: store.getState().todo.todoList,
-            }))
-        })
-
-        this.chgInput = this.chgInput.bind(this)
-        this.addTodo = this.addTodo.bind(this)
-        this.delTodo = this.delTodo.bind(this)
-    }
-    render() {
-        return(
-            <Ui 
-                inputVal={this.state.inputVal}
-                todoList={this.state.todoList}
-                chgInput={this.chgInput}
-                addTodo={this.addTodo}
-                delTodo={this.delTodo}
-            />
-        )
-    }
-
-    /**
-     * chgInput 输入框事件，改变仓库的inputVal
-     * @param {String} value 输入的值
-     */
-    chgInput(value) {
-        store.dispatch(getInputChgAction(value))
-    }
-
-    /**
-     * addTodo 添加操作
-     */
-    addTodo() {
-        store.dispatch(getAddTodoAction())
-    }
-
-    /**
-     * delTodo 删除 todo
-     * @param {Number} index 下标
-     */
-    delTodo(index) {
-        store.dispatch(getDelTodoAction(index))
-    }
-
-    /**
-     * 页面一加载的时候请求 todo 数据
-     */
-    componentDidMount() {
-        store.dispatch(getInitTodoAction) 
-    }
-
-    /**
-     * componentWillUnmount 组件销毁
-     */
-    componentWillUnmount() {
-        this.unSub()
+/**
+ * 映射数据到ui组件props的身上
+ * @param {Object} state redux身上的state （主的state）
+ * @return {Object} 映射到ui组件身上的props
+ */
+const mapStateToProps = ({ todo }) => {
+    return {
+        inputVal: todo.inputVal,
+        todoList: todo.todoList
     }
 }
 
-export default Cinema;
+
+/**
+ * 映射动作到ui组件身上
+ * @param {Function} dispatch store.dispatch
+ * @return {Object} 映射到UI组件的props身上 方法
+ */
+const mapDispatchToProps = (dispatch) => {
+    return {
+        chgInput: (value) => {
+            dispatch(getInputChgAction(value))
+        }, 
+        addTodo: () => {
+            dispatch(getAddTodoAction())
+        },
+        delTodo: (index) => {
+            dispatch(getDelTodoAction(index))
+        },
+        initTodo: () => {
+            dispatch(getInitTodoAction)
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ui)
