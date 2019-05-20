@@ -190,7 +190,7 @@ chgInput(value) {
 ```
 
 # ? React Element 是什么
-> 
+> 可以认为在写JSX，但实际上市在调用一个函数，这个函数返回了一个对象
 
 
 ### redux 中的中间件

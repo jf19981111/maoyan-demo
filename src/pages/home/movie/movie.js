@@ -1,10 +1,10 @@
 import React from 'react'
-import http from '@/utils/http'
+
 
 import Header from '@/common/header/header'
 import store from '@/store'
 
-import { SET_MOVIE_LIST } from './store/actionTypes'
+import { getMovieListAction } from './store/createActions'
 
 import { MovieWrapper, TopbarWrapper, ListWrapper } from './style'
 
@@ -103,12 +103,7 @@ class Movie extends React.Component {
      * 请求数据
      */
     componentDidMount() {
-        http.get('/ajax/movieOnInfoList?token=').then(res => {
-            store.dispatch({
-                type: SET_MOVIE_LIST,
-                list: res.movieList
-            })
-        })
+        store.dispatch(getMovieListAction)
     }
 
     /**
