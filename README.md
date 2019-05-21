@@ -280,3 +280,71 @@ export const getDelTodoAction = (index) => {
     - mapDispatchToProps
 
         1. 能够将redux中的某个动作映射到ui组件的props中去
+
+# immutable
+
+> 它能够帮组我们创建一个不可变的数据
+
+- 有几种数据类型
+1. List: 有序索引集，类似JavaScript中的Array
+2. Map: 无序索引集，类似JavaScript中的Object
+...主要用的最多的两种
+
+直接使用 JSON.parse(JSON.stringify(state)) 的方式来操作state，没有问题，但是有性能问题
+
+于是采用 immutable 的方式来解决这个问题
+
+## 使用
+
+1. 安装 `yarn add immutable redux-immutable`
+
+API:
+
+- fromJS()
+
+作用: 
+> 将一个普通的js数据转换成 immutable 类型的数据
+用法: `fromJS(value, converter)`
+简介: value是要转变的数据，converter是要做的操作。第二个参数可不填，默认情况会将数组准换为List类型，将对象转换为Map类型，其余不做操作。
+
+- toJS()
+作用:
+> 将一个immutable数据转换为JS类型的数据
+用法: `value.toJS()`
+
+- 数据修改
+注: 这里对于数据的修改，是对原数据进行操作后的值赋值给一个新的数据，并不会对原数据进行修改，因为Immutable是不可变的数据类型。
+- set()
+> 修改某个 immutable 数据的属性，不会改变原始的数据，会返回一个新的 immutable 的数据
+
+- setIn()
+> 设置深沉结构的数据
+
+- get()
+> 从某个 immutable 数据身上获取某个属性
+
+- getIn()
+> 获取深层次的数据
+
+```js
+import { fromJS } from 'immutable'
+
+let state = fromJS({
+    name: 'zhangsan',
+    age: 18,
+    list: [1,2,3],
+    address: {
+        hello: {
+            a: 'a'
+        }
+    }
+})
+
+// 将state中的list 2 修改为5
+let newState = state.setIn(['list', 1], 5)
+console.log(newState.toJS())
+// 将state中的address hello a 修改为 b
+let new2State = newState.setIn(['address', 'hello', 'a'], 'b')
+
+
+```

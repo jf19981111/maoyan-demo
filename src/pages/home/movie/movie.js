@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import Ui from './ui'
 import { getMovieListAction } from './store/createActions'
 
-const mapStateToProps = ({ movie }) => {
+const mapStateToProps = (state) => {
     return {
-        movieList: movie.movieList
+        movieList: state.getIn(['movie', 'movieList'])
     }
 }
 

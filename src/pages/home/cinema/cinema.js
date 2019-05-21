@@ -13,10 +13,12 @@ import {
  * @param {Object} state redux身上的state （主的state）
  * @return {Object} 映射到ui组件身上的props
  */
-const mapStateToProps = ({ todo }) => {
+const mapStateToProps = (state) => {
+    // 会进来两次？？？？
+    // 第一次为默认的空数组
     return {
-        inputVal: todo.inputVal,
-        todoList: todo.todoList
+        inputVal: state.getIn(['todo', 'inputVal']),
+        todoList: state.getIn(['todo', 'todoList'])
     }
 }
 

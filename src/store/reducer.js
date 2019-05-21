@@ -1,5 +1,5 @@
 // 主 reducer
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
 
 import todoReducer from '@/pages/home/cinema/store/reducer'
 import movieReducer from '@/pages/home/movie/store/reducer'
