@@ -298,7 +298,10 @@ export const getDelTodoAction = (index) => {
 
 1. 安装 `yarn add immutable redux-immutable`
 
-API:
+- 要在我们的主reducer中引入的地方
+`import {combineReducers} from 'redux-immutable`
+
+immutable中的API:
 
 - fromJS()
 
@@ -348,3 +351,70 @@ let new2State = newState.setIn(['address', 'hello', 'a'], 'b')
 
 
 ```
+# 什么是mockjs
+- mock 是一个模拟数据生成器
+- 模拟 ajax请求，生成请求数据
+- 基于html模板生成模拟数据
+
+优点:
+1. 简单方便，无入侵性，基本覆盖常用的接口数据类型
+2. 可以模拟哪些无法访问的资源
+3. 无需担心网速不好
+4. 开发时，如果后端还没有完成数据输出，前端可自写静态模拟数据，前后端分离，提高效率
+
+# mock.js 的使用
+
+1. 安装 `yarn add mockjs -D`
+2. 创建一个 mockData 文件夹，里面创建一个index.js
+3. 入口 js 中，将第二步中的js文件进行引入
+
+```js
+import Mock from 'mockjs'
+
+Mock.mock('/api/getFilm', {
+    msg: 'hello'
+})
+```
+
+API:
+- Mock.mock( rurl?, rtype?, template|function( options ))
+
+`Mock.mock( template )`
+根据数据模板生成模拟数据。
+
+`Mock.mock( rurl, template )`
+记录数据模板。当拦截到匹配 rurl 的 Ajax 请求时，将根据数据模板 template 生成模拟数据，并作为响应数据返回。
+
+`Mock.mock( rurl, function( options ) )`
+记录用于生成响应数据的函数。当拦截到匹配 rurl 的 Ajax 请求时，函数 function(options) 将被执行，并把执行结果作为响应数据返回。
+
+`Mock.mock( rurl, rtype, template )`
+记录数据模板。当拦截到匹配 rurl 和 rtype 的 Ajax 请求时，将根据数据模板 template 生成模拟数据，并作为响应数据返回。
+
+`Mock.mock( rurl, rtype, function( options ) )`
+记录用于生成响应数据的函数。当拦截到匹配 rurl 和 rtype 的 Ajax 请求时，函数 function(options) 将被执行，并把执行结果作为响应数据返回。
+
+`rurl`
+可选。
+
+表示需要拦截的 URL，可以是 URL 字符串或 URL 正则。例如 `/\/domain\/list\.json/、'/domian/list.json'`。
+
+`rtype`
+可选。
+
+表示需要拦截的 Ajax 请求类型。例如 GET、POST、PUT、DELETE 等。
+
+`template`
+可选。
+
+表示数据模板，可以是对象或字符串。例如 { 'data|1-10':[{}] }、'@EMAIL'。
+
+`function(options)`
+可选。
+
+表示用于生成响应数据的函数。
+
+`options`
+指向本次请求的 Ajax 选项集，含有 url、type 和 body 三个属性
+
+从 1.0 开始，Mock.js 通过覆盖和模拟原生 XMLHttpRequest 的行为来拦截 Ajax 请求，不再依赖于第三方 Ajax 工具库（例如 jQuery、Zepto 等）。

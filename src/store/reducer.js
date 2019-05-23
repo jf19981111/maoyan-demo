@@ -3,11 +3,13 @@ import { combineReducers } from 'redux-immutable'
 
 import todoReducer from '@/pages/home/cinema/store/reducer'
 import movieReducer from '@/pages/home/movie/store/reducer'
+import userReducer from '@/pages/login/store/reducer'
 
 
 export default combineReducers({
     todo: todoReducer,
-    movie: movieReducer 
+    movie: movieReducer,
+    user: userReducer
 })
 
 // 因为 state 已经很庞大了，所以我们传递进去的时候，就把相应的 reducer 对象传递进去，随时要注意 undefined 的情况

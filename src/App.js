@@ -3,6 +3,7 @@ import React from 'react'
 import { Route,Switch } from 'react-router-dom'
 import Home from './pages/home/home'
 import Detail from './pages/detail/detail'
+import Login from './pages/login/login'
 
 class App extends React.Component {
     render() {
@@ -13,6 +14,11 @@ class App extends React.Component {
                     path="/shows/:movieId"
                     component={ Detail }
                 ></Route>
+                <Route
+                    path="/login"
+                    component={ Login }
+                >
+                </Route>
                 <Route
                     path="/"
                     component={ Home }

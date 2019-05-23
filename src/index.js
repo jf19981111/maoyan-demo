@@ -6,6 +6,9 @@ import App from './App';
 import './index.less'
 import store from './store/index'
 
+// 引入mockjs
+import './mockData/index'
+
 
 ReactDOM.render(
     <Provider store={ store }>
